@@ -2,6 +2,10 @@ const { Schema, model } = require("mongoose");
 
 // Schema for reaction subdocument
 const reactionSchema = new Schema({
+  reactionId: {
+    type: ObjectId,
+    auto: true,
+  },
   reactionBody:{
     type: String,
     required: true,
@@ -18,7 +22,7 @@ const reactionSchema = new Schema({
   }
 });
 
-// Schema for thought subdocument
+// Schema for Thought model
 const thoughtSchema = new Schema({
   thoughtText: {
     type: String,
