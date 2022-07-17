@@ -1,24 +1,5 @@
 const { Schema, model } = require("mongoose");
-
-// Schema for thought subdocument
-const thoughtSchema = new Schema({
-  thoughtText: {
-    type: String,
-    required: true,
-    minLength: 1,
-    maxLength: 280
-  },
-  createdAt: {
-    type: Date, 
-    default: Date.now
-    // TODO: create getter method to format the timestamp
-  },
-  username: {
-    type: String,
-    required: true
-  },
-  reactions: [reactionSchema]
-});
+const Thought = require('./Thought');
 
 // Schema for what makes up user information
 const userSchema = new Schema(
@@ -35,7 +16,7 @@ const userSchema = new Schema(
       required: true,
       match: "/^([a-z0-9._-]+)@([a-z0-9.]+)$/gm",
     },
-    thoughts: [thoughtSchema],
+    thoughts: [Thought],
     friends: [userSchema],
   },
   {
