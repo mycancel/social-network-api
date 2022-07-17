@@ -1,4 +1,5 @@
-const { Schema, model } = require("mongoose");
+const { ObjectId } = require('bson');
+const { Schema, model } = require('mongoose');
 
 // Schema for what makes up user information
 const userSchema = new Schema(
@@ -13,12 +14,14 @@ const userSchema = new Schema(
       type: String,
       unique: true,
       required: true,
-      match: "/^([a-z0-9._-]+)@([a-z0-9.]+)$/gm",
+      match: /^([a-z0-9._-]+)@([a-z0-9.]+)$/gm,
     },
     // TODO: relationship with thoughts
-    // thoughts: [Thought],
-    // TODO: Self-reference for friends
-    // friends: [userSchema],
+    // thoughts: {
+    //   type: ObjectId,
+    //   ref: 'thought'
+    // },
+    friends: [ObjectId],
   },
   {
     toJSON: {
@@ -29,11 +32,11 @@ const userSchema = new Schema(
 );
 
 // Retrieves length of user's friends array field on query
-userSchema.virtual("friendCount").get(function () {
+userSchema.virtual('friendCount').get(function () {
   return this.friends.length;
 });
 
 // Initialize the User model
-const User = model("user", userSchema);
+const User = model('user', userSchema);
 
 module.exports = User;
