@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-const Thought = require('./Thought');
 
 // Schema for what makes up user information
 const userSchema = new Schema(
@@ -16,8 +15,10 @@ const userSchema = new Schema(
       required: true,
       match: "/^([a-z0-9._-]+)@([a-z0-9.]+)$/gm",
     },
-    thoughts: [Thought],
-    friends: [userSchema],
+    // TODO: relationship with thoughts
+    // thoughts: [Thought],
+    // TODO: Self-reference for friends
+    // friends: [userSchema],
   },
   {
     toJSON: {
