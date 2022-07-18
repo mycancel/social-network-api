@@ -15,7 +15,7 @@ module.exports = {
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
-  // Get a single user
+  // Get a single user by userId
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .then((user) =>
@@ -34,4 +34,13 @@ module.exports = {
         res.status(500).json(err);
       });
   },
+  // Update user by userId
+  updateUser(req, res) {
+    User.findOneAndUpdate({ _id: req.params.userId }, {...req.body})
+      .then((user) => res.json(user))
+      .catch((err) => {
+        console.error(err);
+        res.status(500).json(err);
+      });
+  }
 };
