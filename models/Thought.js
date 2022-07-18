@@ -2,11 +2,10 @@ const { Schema, model } = require("mongoose");
 
 // Schema for reaction subdocument
 const reactionSchema = new Schema({
-  // TODO: create reactionId
-  //  reactionId: {
-  //   type: ObjectId,
-  //   auto: true,
-  // },
+   reactionId: {
+    type: Schema.Types.ObjectId,
+    auto: true,
+  },
   reactionBody:{
     type: String,
     required: true,
