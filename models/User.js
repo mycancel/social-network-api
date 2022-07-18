@@ -17,11 +17,11 @@ const userSchema = new Schema(
       match: /^([a-z0-9._-]+)@([a-z0-9.]+)$/gm,
     },
     // TODO: relationship with thoughts
-    // thoughts: {
-    //   type: ObjectId,
+    // thoughts: [{
+    //   type: Schema.Types.ObjectId,
     //   ref: 'thought'
-    // },
-    friends: [ObjectId],
+    // }],
+    friends: [Schema.Types.ObjectId],
   },
   {
     toJSON: {

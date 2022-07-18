@@ -6,21 +6,25 @@
 // addNewFriend,
 // deleteFriend
 
-const { User } = require('../models');
+const { User } = require("../models");
 
 module.exports = {
   // Get all users
   getUsers(req, res) {
     User.find()
+      // Removes the __v field
+      .select("-__v")
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
   // Get a single user by userId
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
+      // Removes the __v field
+      .select("-__v")
       .then((user) =>
         !user
-          ? res.status(404).json({ message: 'No user found with that id' })
+          ? res.status(404).json({ message: "No user found with that id" })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
@@ -36,7 +40,11 @@ module.exports = {
   },
   // Update user by userId
   updateUser(req, res) {
-    User.findOneAndUpdate({ _id: req.params.userId }, {...req.body})
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { ...req.body },
+      { new: true }
+    )
       .then((user) => res.json(user))
       .catch((err) => {
         console.error(err);
@@ -51,5 +59,18 @@ module.exports = {
         console.error(err);
         res.status(500).json(err);
       });
-  }
+  },
+  // Add new friend by userId and friendId
+  addFriend(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $push: { friends: req.params.friendId } },
+      { new: true }
+    )
+      .then((user) => res.json(user))
+      .catch((err) => {
+        console.error(err);
+        res.status(500).json(err);
+      });
+  },
 };
