@@ -1,4 +1,3 @@
-const { ObjectId } = require('bson');
 const { Schema, model } = require('mongoose');
 
 // Schema for what makes up user information
@@ -16,11 +15,10 @@ const userSchema = new Schema(
       required: true,
       match: /^([a-z0-9._-]+)@([a-z0-9.]+)$/gm,
     },
-    // TODO: relationship with thoughts
-    // thoughts: [{
-    //   type: Schema.Types.ObjectId,
-    //   ref: 'thought'
-    // }],
+    thoughts: [{
+      type: Schema.Types.ObjectId,
+      ref: 'thought'
+    }],
     friends: [Schema.Types.ObjectId],
   },
   {

@@ -1,11 +1,3 @@
-// getUsers,
-// getSingleUser,
-// createNewUser,
-// updateUser,
-// deleteUser,
-// addNewFriend,
-// deleteFriend
-
 const { User } = require("../models");
 
 module.exports = {
