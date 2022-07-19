@@ -60,13 +60,11 @@ module.exports = {
   deleteThought(req, res) {
     Thought.findOneAndDelete({ _id: req.params.thoughtId })
       .then((thought) => {
-        !thought
-          ? res.status(404).json({ message: 'No thought with this id!' })
-          : User.findOneAndUpdate(
-            { thoughts: req.params.thoughtId },
+        return User.findOneAndUpdate(
+            { username: thought.username },
             { $pull: { thoughts: req.params.thoughtId } },
             { new: true }
-          )
+          );
       })
       .then((user) =>
       !user
@@ -79,29 +77,29 @@ module.exports = {
       });
   },
   // Add reaction by thoughtId
-  // createReaction(req, res) {
-  //   Thought.findOneAndUpdate(
-  //     { _id: req.params.thoughtId },
-  //     { $push: { reactions: req.body } },
-  //     { new: true }
-  //   )
-  //     .then((thought) => res.json(thought))
-  //     .catch((err) => {
-  //       console.error(err);
-  //       res.status(500).json(err);
-  //     });
-  // },
+  createReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $addToSet: { reactions: req.body } },
+      { new: true }
+    )
+      .then((thought) => res.json(thought))
+      .catch((err) => {
+        console.error(err);
+        res.status(500).json(err);
+      });
+  },
   // Removes reaction from thought's reaction list
-  // deleteReaction(req, res) {
-  //   Thought.findOneAndUpdate(
-  //     { _id: req.params.thoughtId },
-  //     { $pull: { reactions: req.params.reactionId } },
-  //     { new: true }
-  //   )
-  //     .then((thought) => res.json(thought))
-  //     .catch((err) => {
-  //       console.error(err);
-  //       res.status(500).json(err);
-  //     });
-  // },
+  deleteReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: { reactionId: req.params.reactionId } } },
+      { new: true }
+    )
+      .then((thought) => res.json(thought))
+      .catch((err) => {
+        console.error(err);
+        res.status(500).json(err);
+      });
+  },
 };
