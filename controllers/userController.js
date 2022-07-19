@@ -44,7 +44,6 @@ module.exports = {
       });
   },
   // Delete user by userId
-  // TODO: Delete related Thoughts
   deleteUser(req, res) {
     User.findOneAndDelete({ _id: req.params.userId })
       .then((user) => res.json(user))
